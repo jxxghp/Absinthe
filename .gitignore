@@ -1,4 +1,5 @@
 model
+/.idea
 /code
 /.github
 /images
@@ -12,6 +13,8 @@ jd_update.js
 package-lock.json
 jd_enen.js
 jd_checkCK.js
+
+jd_lzdz1_customized5_18 2.js
 
 shell
 README.MD
@@ -46,7 +49,7 @@ jd_jin_tie_xh.js
 jd_jmzhl.js
 jd_zsign.js
 jd_big_winner_Mod.js	
-jd_tyt_ks.js
+#jd_tyt_ks.js
 jd_MovementFaker.js	
 gua_city.js
 # 城城分现金
@@ -81,7 +84,7 @@ jd_nh_red.js
 jd_nh_sign.js
 jd_Red.js
 ##
-jd_disable.py
+
 jd_dreamFactory2.js
 jd_selectionOfficer.js
 jd_cfd2.js
@@ -93,8 +96,11 @@ jdCookie_xh.js
 #会员开卡赢京豆
 jd_opencardjoyjd.js
 #KR开卡
-jd_opencard*.js
+#
 jd_bean_change_xh.js
+#禁用重复任务
+jd_identicalnew.py 
+gua_*.js
 #月资产
 #jd_bean_change1.js
 jd_bean_change_pro.js
@@ -104,7 +110,7 @@ jd_exchange_joy.js
 # 东东世界兑换
 #jd_ddworld_exchange.js
 jdd_jd_fcdyj.js
-jd_zjd.js
+#jd_zjd.js
 jd_qjdSupermarket.js
 jd_drawEntrance.js
 jd_dreamfactory_tuan.js
@@ -163,6 +169,9 @@ jd_rush_vibo.js
 jd_fcwb_auto.js
 jd_fcwb_wb.js
 
+jd_opencard[0-9][0-9].js
+!jd_opencardL*.js
+jd_opencard[0-9][0-9][0-9][0-9]*.js
 
 jd_carnivalcity_help.js
 jd_jddt.js
@@ -184,6 +193,14 @@ jd_jx_factory.js
 
 m_*.js
 ######重复脚本#######
+#组队
+jd_teamMN.js
+jd_teamFLP.js
+jd_teamXAY.js
+jd_sevenDay_info.js 
+
+jd_plantBean_Mod.js
+#种豆得豆互助版
 jd_lzdz1_customized5_18 2.js
 jd_??-?.js
 #集魔方
@@ -279,7 +296,7 @@ jd_joyjd_open2.js
 # 禁用重复任务
 jd_disableDuplicateTasksImplement.py
 # 炸年兽重
-jd_zns.js
+#jd_zns.js
 jd_zhaNS.js
 #送豆得豆重复
 jd_sddd.js
@@ -368,6 +385,9 @@ gua_HappyNewYear_Shares.js
 #头文字
 #jd_mpdzcar.js
 #jd_mpdzcar_*.js
+jd_mpdzcarJ.js
+jd_carplay.js
+jd_mpdz_car.js
 #推一推
 #jd_tyt.js
 #38节相关脚本
@@ -378,6 +398,13 @@ jd_captian_*.js
 jd_april*.js
 
 ############不能跑的###############
+#注销京东会员卡
+jd_unbind.js
+
+jd_cash_Mod_Panda.js	
+#panda签到领现金
+jd_joy_park_Mod.js
+#养joy
 jd_cash.ts
 #内容鉴赏
 jd_connoisseur.js

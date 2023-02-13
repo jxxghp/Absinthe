@@ -10,17 +10,17 @@
 
 =====================================Quantumult X=================================
 [task_local]
-40 4,17 * * * https://raw.githubusercontent.com/555555/faker2/main/jd_plantBean_help.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
+40 4,17 * * * https://raw.githubusercontent.com/444444/JDJB/main/jd_plantBean_help.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
 
 =====================================Loon================================
 [Script]
-cron "40 4,17 * * *" script-path=https://raw.githubusercontent.com/555555/faker2/main/jd_plantBean_help.js,tag=京东种豆得豆
+cron "40 4,17 * * *" script-path=https://raw.githubusercontent.com/444444/JDJB/main/jd_plantBean_help.js,tag=京东种豆得豆
 
 ======================================Surge==========================
-京东种豆得豆 = type=cron,cronexp="40 4,17 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/555555/faker2/main/jd_plantBean_help.js
+京东种豆得豆 = type=cron,cronexp="40 4,17 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/444444/JDJB/main/jd_plantBean_help.js
 
 ====================================小火箭=============================
-京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/555555/faker2/main/jd_plantBean_help.js, cronexpr="40 4,17 * * *", timeout=3600, enable=true
+京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/444444/JDJB/main/jd_plantBean_help.js, cronexpr="40 4,17 * * *", timeout=3600, enable=true
 
 */
 const $ = new Env('种豆得豆内部互助');
@@ -59,7 +59,8 @@ let lnruns = 0;
       $.isLogin = true;
       $.nickName = '';
       $.hotFlag = false; //是否火爆
-      await TotalBean();
+			$.UA = require('./USER_AGENTS').UARAM();
+      //await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -74,14 +75,6 @@ let lnruns = 0;
       option = {};
       await jdPlantBean();
 	  await $.wait(2 * 1000);
-	  lnrun++;
-	  await doHelp();
-	  if (lnrun == 3) {
-		  console.log(`\n【访问接口次数达到3次，休息一分钟.....】\n`);
-		  await $.wait(60 * 1000);
-		  lnrun = 0;
-	  }
-	  await $.wait(3 * 1000);
     }
   }
   if ($.isNode() && allMessage) {
@@ -118,6 +111,14 @@ async function jdPlantBean() {
       awardState = roundList[num - 1].awardState;
       $.taskList = $.plantBeanIndexResult.data.taskList;
       subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
+	  lnrun++;
+	  await doHelp();
+		if (lnrun == 3) {
+		console.log(`\n【访问接口次数达到3次，休息半分钟.....】\n`);
+		await $.wait(30 * 1000);
+		lnrun = 0;
+		}
+	    await $.wait(3 * 1000);
     } else {
       console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
     }
@@ -125,7 +126,7 @@ async function jdPlantBean() {
     $.logErr(e);
     const errMsg = `京东账号${$.index} ${$.nickName || $.UserName}\n任务执行异常，请检查执行日志 ‼️‼️`;
     // if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
-    $.msg($.name, '', `${errMsg}`)
+    //$.msg($.name, '', `${errMsg}`)
   }
 }
 //助力好友
@@ -148,9 +149,9 @@ async function doHelp() {
 		  await $.wait(30 * 1000);
 		  lnruns = 0;
 	  }
-    if ($.helpResult && $.helpResult.code === '0') {
+        if ($.helpResult && $.helpResult.code === '0' && $.helpResult.data) {
       console.log(`助力好友结果: ${JSON.stringify($.helpResult.data.helpShareRes)}`);
-      if ($.helpResult.data.helpShareRes) {
+      if ($.helpResult.data && $.helpResult.data.helpShareRes) {
         if ($.helpResult.data.helpShareRes.state === '1') {
           console.log(`助力好友${plantUuid}成功`)
           console.log(`${$.helpResult.data.helpShareRes.promptText}\n`);
@@ -316,7 +317,7 @@ async function plantBeanIndex() {
 }
 function requestGet(function_id, body = {}) {
   if (!body.version) {
-    body["version"] = "9.0.0.1";
+    body["version"] = "9.2.4.2";
   }
   body["monitor_source"] = "plant_app_plant_index";
   body["monitor_refer"] = "";
@@ -329,7 +330,7 @@ function requestGet(function_id, body = {}) {
         'Host': 'api.m.jd.com',
         'Accept': '*/*',
         'Connection': 'keep-alive',
-        'User-Agent': 'JD4iPhone/167283 (iPhone;iOS 13.6.1;Scale/3.00)',
+        'User-Agent': $.UA,
         'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
         'Accept-Encoding': 'gzip, deflate, br',
         'Content-Type': "application/x-www-form-urlencoded"
@@ -453,23 +454,25 @@ function request(function_id, body = {}) {
   })
 }
 function taskUrl(function_id, body) {
-  body["version"] = "9.2.4.0";
+  body["version"] = "9.2.4.2";
   body["monitor_source"] = "plant_app_plant_index";
+  if (!body["monitor_refer"]){
   body["monitor_refer"] = "";
+  }
   return {
     url: JD_API_HOST,
-    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&area=19_1601_50258_51885&build=167490&clientVersion=9.3.2`,
+    body: `functionId=${function_id}&body=${encodeURIComponent(JSON.stringify(body))}&appid=ld&client=apple&area=19_1601_50258_51885&build=167490&clientVersion=9.3.2`,
     headers: {
       "Cookie": cookie,
-      "Host": "api.m.jd.com",
+      //"Host": "api.m.jd.com",
       "Accept": "*/*",
-      "Connection": "keep-alive",
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      //"Connection": "keep-alive",
+      "User-Agent": $.UA,
       "Accept-Language": "zh-Hans-CN;q=1,en-CN;q=0.9",
       "Accept-Encoding": "gzip, deflate, br",
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    timeout: 10000,
+    timeout: 20000,
   }
 }
 function getParam(url, name) {
